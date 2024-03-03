@@ -1,18 +1,19 @@
 import React, { ReactNode } from 'react';
 import { Route, RouteProps, Redirect } from 'react-router-dom';
-import { Login } from '../pages/Account/Login';
-
+import { useSelector } from "react-redux";
+import { AppState } from '../stores';
+import { AccountState } from '../stores/account/types';
 interface PrivateRouterProps extends RouteProps {
   children: ReactNode;
 }
 
 export const PrivateRouter = ({ children, ...rest }: PrivateRouterProps): JSX.Element => {
-  const isLoggedIn = true; // Thay đổi logic kiểm tra đăng nhập của bạn ở đây
+  const account:AccountState = useSelector((state: AppState) => state.account);
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        isLoggedIn ? (
+        account.token ? (
           children
         ) : (
           <Redirect
