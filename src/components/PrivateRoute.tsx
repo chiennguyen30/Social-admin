@@ -12,14 +12,13 @@ export const PrivateRouter = ({ children, ...rest }: PrivateRouterProps): JSX.El
   return (
     <Route
       {...rest}
-      render={({ location }) =>
+      render={() =>
         account.token ? (
           children
         ) : (
           <Redirect
             to={{
               pathname: '/login',
-              state: { from: location }
             }}
           />
         )
